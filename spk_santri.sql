@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Okt 2021 pada 09.32
--- Versi server: 10.4.18-MariaDB
--- Versi PHP: 8.0.3
+-- Waktu pembuatan: 16 Nov 2021 pada 14.43
+-- Versi server: 10.4.8-MariaDB
+-- Versi PHP: 7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -101,6 +102,33 @@ INSERT INTO `tabel_kriteria` (`id_kriteria`, `nisn`, `c1`, `c2`, `c3`, `c4`, `c5
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `tabel_normalisasi`
+--
+
+CREATE TABLE `tabel_normalisasi` (
+  `c1` varchar(50) NOT NULL,
+  `c4` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `tabel_normalisasi`
+--
+
+INSERT INTO `tabel_normalisasi` (`c1`, `c4`) VALUES
+('0.055555555555556', '0.00000066666666666667'),
+('0.055555555555556', '0.00000058823529411765'),
+('0.055555555555556', '0.00000083333333333333'),
+('0.055555555555556', '0.0000004'),
+('0.055555555555556', '0.00000044444444444444'),
+('0.055555555555556', '0.00000058823529411765'),
+('0.052631578947368', '0.00000052631578947368'),
+('0.055555555555556', '0.0000004'),
+('0.058823529411765', '0.00000038461538461538'),
+('0.055555555555556', '0.00000066666666666667');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `tabel_ranking`
 --
 
@@ -116,16 +144,16 @@ CREATE TABLE `tabel_ranking` (
 --
 
 INSERT INTO `tabel_ranking` (`id_ranking`, `nisn`, `nilai`, `tahun`) VALUES
-(381, '33115888', '0.175', '2021'),
-(382, '26183277', '0.097', '2021'),
-(383, '35590923', '0.088', '2021'),
-(384, '38716496', '0.064', '2021'),
-(385, '88727283', '0.234', '2021'),
-(386, '39471501', '0.128', '2021'),
-(387, '24044893', '0.161', '2021'),
-(388, '33139709', '0.084', '2021'),
-(389, '40234997', '0.068', '2021'),
-(390, '20040617', '0.241', '2021');
+(401, '33115888', '0.175', '2021'),
+(402, '26183277', '0.097', '2021'),
+(403, '35590923', '0.088', '2021'),
+(404, '38716496', '0.064', '2021'),
+(405, '88727283', '0.234', '2021'),
+(406, '39471501', '0.128', '2021'),
+(407, '24044893', '0.161', '2021'),
+(408, '33139709', '0.084', '2021'),
+(409, '40234997', '0.068', '2021'),
+(410, '20040617', '0.241', '2021');
 
 -- --------------------------------------------------------
 
@@ -216,7 +244,7 @@ ALTER TABLE `tabel_kriteria`
 -- AUTO_INCREMENT untuk tabel `tabel_ranking`
 --
 ALTER TABLE `tabel_ranking`
-  MODIFY `id_ranking` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=391;
+  MODIFY `id_ranking` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=411;
 
 --
 -- AUTO_INCREMENT untuk tabel `tabel_santri`
