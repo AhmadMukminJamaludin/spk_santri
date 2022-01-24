@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Jan 2020 pada 13.29
--- Versi server: 10.1.31-MariaDB
--- Versi PHP: 5.6.35
+-- Generation Time: Jan 03, 2022 at 10:33 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.4.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,181 +24,246 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `bobot_kriteria`
+-- Table structure for table `admin`
 --
 
-CREATE TABLE `bobot_kriteria` (
-  `id_bobot` int(4) NOT NULL,
+CREATE TABLE `admin` (
+  `id_admin` int(1) NOT NULL,
+  `nama` varchar(35) NOT NULL,
+  `username` varchar(10) NOT NULL,
+  `password` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`id_admin`, `nama`, `username`, `password`) VALUES
+(1, 'admin1', 'admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_bobot`
+--
+
+CREATE TABLE `tabel_bobot` (
+  `id_bobot` int(5) NOT NULL,
   `w1` float NOT NULL,
   `w2` float NOT NULL,
   `w3` float NOT NULL,
-  `w4` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `w4` float NOT NULL,
+  `w5` float NOT NULL,
+  `w6` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `bobot`
+-- Dumping data for table `tabel_bobot`
 --
 
-INSERT INTO `bobot_kriteria` (`id_bobot`, `w1`, `w2`, `w3`, `w4`) VALUES
-(1, 0.3, 0.3, 0.2, 0.2);
+INSERT INTO `tabel_bobot` (`id_bobot`, `w1`, `w2`, `w3`, `w4`, `w5`, `w6`) VALUES
+(1, 0.1, 0.25, 0.2, 0.15, 0.1, 0.2);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kriteria`
+-- Table structure for table `tabel_kriteria`
 --
 
-CREATE TABLE `kriteria` (
-  `id_kriteria` int(4) NOT NULL,
-  `nis` varchar(16) NOT NULL,
-  `c1` int(2) DEFAULT NULL,
-  `c2` int(2) DEFAULT NULL,
-  `c3` int(2) DEFAULT NULL,
-  `c4` int(2) DEFAULT NULL,
-  `semester` varchar(10) NOT NULL,
+CREATE TABLE `tabel_kriteria` (
+  `id_kriteria` int(5) NOT NULL,
+  `nisn` varchar(20) NOT NULL,
+  `c1` int(2) NOT NULL,
+  `c2` int(2) NOT NULL,
+  `c3` int(2) NOT NULL,
+  `c4` int(10) NOT NULL,
+  `c5` int(2) NOT NULL,
+  `c6` int(2) NOT NULL,
   `tahun` varchar(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `kriteria`
+-- Dumping data for table `tabel_kriteria`
 --
 
-INSERT INTO `kriteria` (`id_kriteria`, `nis`, `c1`, `c2`, `c3`, `c4`, `semester`, `tahun`) VALUES
-(37, '1044', 78, 78, 97, 90, 'GASAL', '2019'),
-(38, '1110', 78, 77, 95, 50, 'GASAL', '2019'),
-(39, '1123', 79, 79, 90, 60, 'GASAL', '2019'),
-(40, '1136', 87, 88, 89, 80, 'GASAL', '2019');
+INSERT INTO `tabel_kriteria` (`id_kriteria`, `nisn`, `c1`, `c2`, `c3`, `c4`, `c5`, `c6`, `tahun`) VALUES
+(1, '33115888', 18, 83, 4, 1500000, 6, 81, '2021'),
+(2, '0026183277', 18, 82, 1, 1700000, 2, 85, '2021'),
+(3, '0035590923', 18, 84, 0, 1200000, 1, 86, '2021'),
+(4, '0038716496', 18, 80, 1, 2500000, 1, 81, '2021'),
+(5, '0088727283', 18, 85, 10, 2250000, 5, 92, '2021'),
+(6, '0039471501', 18, 90, 1, 1700000, 4, 91, '2021'),
+(7, '0024044893', 19, 82, 5, 1900000, 4, 85, '2021'),
+(8, '0033139709', 18, 86, 1, 2500000, 2, 90, '2021'),
+(9, '0040234997', 17, 90, 0, 2600000, 1, 92, '2021'),
+(10, '0020040617', 18, 84, 10, 1500000, 4, 91, '2021');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `rangking`
+-- Table structure for table `tabel_normalisasi`
 --
 
-CREATE TABLE `rangking` (
-  `id_rangking` int(4) NOT NULL,
-  `nis` varchar(30) NOT NULL,
+CREATE TABLE `tabel_normalisasi` (
+  `nisn` int(10) NOT NULL,
+  `rangking_aras` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `c1` int(20) NOT NULL,
+  `c4` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tabel_normalisasi`
+--
+
+INSERT INTO `tabel_normalisasi` (`nisn`, `rangking_aras`, `c1`, `c4`) VALUES
+(1, '0.81022625935781', 0, 0),
+(2, '0.70182029484926', 0, 0),
+(3, '0.80688253646471', 0, 0),
+(4, '0.59509484388046', 0, 0),
+(5, '0.7763772945777', 0, 0),
+(6, '0.72689870386264', 0, 0),
+(7, '0.7243988522616', 0, 0),
+(8, '0.6126203006843', 0, 0),
+(9, '0.60375003113403', 0, 0),
+(10, '0.87952566255914', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tabel_ranking`
+--
+
+CREATE TABLE `tabel_ranking` (
+  `id_ranking` int(5) NOT NULL,
+  `nisn` varchar(20) NOT NULL,
   `nilai` varchar(10) NOT NULL,
-  `semester` varchar(10) NOT NULL,
   `tahun` varchar(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `rangking`
+-- Dumping data for table `tabel_ranking`
 --
 
-INSERT INTO `rangking` (`id_rangking`, `nis`, `nilai`, `semester`, `tahun`) VALUES
-(1, '1044', 'NAN', 'GASAL', '2020'),
-(142, '1044', '0.31', 'GASAL', '2019'),
-(143, '1110', '0.256', 'GASAL', '2019'),
-(144, '1123', '0.281', 'GASAL', '2019'),
-(145, '1136', '0.341', 'GASAL', '2019');
+INSERT INTO `tabel_ranking` (`id_ranking`, `nisn`, `nilai`, `tahun`) VALUES
+(401, '33115888', '0.175', '2021'),
+(402, '26183277', '0.097', '2021'),
+(403, '35590923', '0.088', '2021'),
+(404, '38716496', '0.064', '2021'),
+(405, '88727283', '0.234', '2021'),
+(406, '39471501', '0.128', '2021'),
+(407, '24044893', '0.161', '2021'),
+(408, '33139709', '0.084', '2021'),
+(409, '40234997', '0.068', '2021'),
+(410, '20040617', '0.241', '2021');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `siswa`
+-- Table structure for table `tabel_santri`
 --
 
-CREATE TABLE `siswa` (
-  `nis` varchar(15) NOT NULL,
-  `nama` varchar(50) DEFAULT NULL,
-  `jk` varchar(20) DEFAULT NULL,
-  `alamat` text,
-  `kelas` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `tabel_santri` (
+  `nisn` int(20) NOT NULL,
+  `nama_santri` varchar(50) NOT NULL,
+  `jenis_kelamin` varchar(10) NOT NULL,
+  `asal_sekolah` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `siswa`
+-- Dumping data for table `tabel_santri`
 --
 
-INSERT INTO `siswa` (`nis`, `nama`, `jk`, `alamat`, `kelas`) VALUES
-('1044', 'FENNY ANGGITA TANIA SARI', 'Perempuan', 'Baleromo Rt 4 Rw 5 Dempet Demak\r\n', 'V A'),
-('1110', 'MUHAMMAD GILANG PUTRA', 'Laki-laki', 'Pondok R.Patah Blok O/3 Rt 6 Rw 4\r\n', 'V A'),
-('1123', 'WAHYU ANDI PUTRA PURA', 'Laki-laki', 'Dempel Barat Rt 2 Rw 8 Sawahbesar\r\n', 'V A'),
-('1136', 'AISYAH ZAHRATU JANNAH', 'Perempuan', 'Jl.Ranggowarsito Kp.Depo Indah Rt 6 Rw 3\r\n', 'V A');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `users`
---
-
-CREATE TABLE `users` (
-  `id_users` int(1) NOT NULL,
-  `nama_user` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(25) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `users`
---
-
-INSERT INTO `users` (`id_users`, `nama_user`, `username`, `password`) VALUES
-(1, 'admin 2', 'admin', '12345');
+INSERT INTO `tabel_santri` (`nisn`, `nama_santri`, `jenis_kelamin`, `asal_sekolah`) VALUES
+(20040617, 'NAFISSATUL MUKARROMAH', 'Perempuan', 'MA SAFINATUL HUDA SOWAN KIDUL KEDUNG JEPARA'),
+(24044893, 'MUHAMMAD ABDUL AZZAM', 'Laki-laki', 'MA AL-HIKMAH 2 TERPADU BENDA SIRAMPOG BREBES'),
+(26183277, 'AHMAD ALI MURTADHO', 'Laki-laki', 'MA NU NURUL HUDA SEMARANG'),
+(33115888, 'AGIL SOFIA ISNAENI', 'Perempuan', 'MA MAARIF NU 1 KEMRANJEN BANYUMAS'),
+(33139709, 'MUHAMMAD AHYUN IRSYADA', 'Laki-laki', 'MA RAUDLATUL ULUM GUYANGAN TRANGKIL PATI'),
+(35590923, 'ALLISA NURUL AINI', 'Perempuan', 'MA NU ASSALAM TANJUNGKARANG JATI KUDUS'),
+(38716496, 'CHINTIA AL FIANINGSIH', 'Perempuan', 'MA MINHAJUT THOLABAH PURBALINGGA'),
+(39471501, 'LUTFI NURUL LAILIYAH', 'Perempuan', 'MA RIYADLOTUT THALABAH REMBANG'),
+(40234997, 'MUHAMMAD SURYA HAMMAM', 'Laki-laki', 'MA NU TASYIWIQUTH THULLAB SALAFIYAH (TBS) KUDUS'),
+(88727283, 'LISTIYANA FITRI ZULAIKHA', 'Perempuan', 'MA SAFINATUL HUDA SOWAN KIDUL KEDUNG JEPARA');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `bobot_kriteria`
+-- Indexes for table `admin`
 --
-ALTER TABLE `bobot_kriteria`
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indexes for table `tabel_bobot`
+--
+ALTER TABLE `tabel_bobot`
   ADD PRIMARY KEY (`id_bobot`);
 
 --
--- Indeks untuk tabel `kriteria`
+-- Indexes for table `tabel_kriteria`
 --
-ALTER TABLE `kriteria`
+ALTER TABLE `tabel_kriteria`
   ADD PRIMARY KEY (`id_kriteria`);
 
 --
--- Indeks untuk tabel `rangking`
+-- Indexes for table `tabel_normalisasi`
 --
-ALTER TABLE `rangking`
-  ADD PRIMARY KEY (`id_rangking`);
+ALTER TABLE `tabel_normalisasi`
+  ADD PRIMARY KEY (`nisn`);
 
 --
--- Indeks untuk tabel `siswa`
+-- Indexes for table `tabel_ranking`
 --
-ALTER TABLE `siswa`
-  ADD PRIMARY KEY (`nis`);
+ALTER TABLE `tabel_ranking`
+  ADD PRIMARY KEY (`id_ranking`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `tabel_santri`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id_users`);
+ALTER TABLE `tabel_santri`
+  ADD PRIMARY KEY (`nisn`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `bobot_kriteria`
+-- AUTO_INCREMENT for table `admin`
 --
-ALTER TABLE `bobot_kriteria`
-  MODIFY `id_bobot` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `admin`
+  MODIFY `id_admin` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `kriteria`
+-- AUTO_INCREMENT for table `tabel_bobot`
 --
-ALTER TABLE `kriteria`
-  MODIFY `id_kriteria` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+ALTER TABLE `tabel_bobot`
+  MODIFY `id_bobot` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `rangking`
+-- AUTO_INCREMENT for table `tabel_kriteria`
 --
-ALTER TABLE `rangking`
-  MODIFY `id_rangking` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=146;
+ALTER TABLE `tabel_kriteria`
+  MODIFY `id_kriteria` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `tabel_normalisasi`
 --
-ALTER TABLE `users`
-  MODIFY `id_users` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `tabel_normalisasi`
+  MODIFY `nisn` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tabel_ranking`
+--
+ALTER TABLE `tabel_ranking`
+  MODIFY `id_ranking` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=411;
+
+--
+-- AUTO_INCREMENT for table `tabel_santri`
+--
+ALTER TABLE `tabel_santri`
+  MODIFY `nisn` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2147483648;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

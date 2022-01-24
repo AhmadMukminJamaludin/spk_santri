@@ -347,52 +347,45 @@
             $kriteria = $this->db->query("SELECT * from tabel_kriteria LEFT JOIN tabel_santri on tabel_kriteria.nisn=tabel_santri.nisn where tahun='$tahun'")->result();
             $nomor = 0;
         foreach($kriteria as $row){
-          $this->db->select_min('c1');
-          $min1 = $this->db->get('tabel_kriteria')->row();
-         $cost1 = 1/($min1->c1);
+         
+         $cost1 = 1/($row->c1);
          $cost4 = 1/($row->c4);
 
-         $tc1 = $cost1;
-         $tc4= $cost4;
+		$cost0 = 1/(($min1->c1));			
+		$cost00 = 1/(($min4->c4));			
 
-            
-            
-    
+	    	$this->db->select_sum('c1');
+            $tott1 = $this->db->get('tabel_normalisasi')->row();
+			$tc1 = ($tott1->c1)+$cost0;
 
-              $xij1 = ($tc1);
+			$this->db->select_sum('c4');
+            $tott4 = $this->db->get('tabel_normalisasi')->row();
+			$tc4 = ($tott4->c4)+$cost00;
+
+              $xij1 = ($cost1)/($tc1);
               $xij2 = ($row->c2)/($total2);
               $xij3 = ($row->c3)/($total3);
               $xij4 = ($cost4)/($tc4);
               $xij5 = ($row->c5)/($total5);
               $xij6 = ($row->c6)/($total6);
 
-              $xijsi1 = ($min1->c1)/($tc1);
+              $xijsi1 = ($cost0)/($tc1);
               $xijsi2 = ($max2->c2)/($total2);
               $xijsi3 = ($max3->c3)/($total3);
-              $xijsi4 = ($min4->c4)/($tc4);
+              $xijsi4 = ($cost00)/($tc4);
               $xijsi5 = ($max5->c5)/($total5);
               $xijsi6 = ($max6->c6)/($total6);
 
             ?>
 
-            <?php 
-            $this->db->select_min('c1');
-            $min1 = $this->db->get('tabel_kriteria')->row();
-            $this->db->select_sum('c1');
-            $data_normal = $this->db->get('tabel_normalisasi')->row();
-            $ro = $this->db->get('tabel_normalisasi')->result();
-            foreach ($ro as $key) {
-              # code...
-              print_r($key->c1);
-            }
-            ?>
+       
           <tr>
           <td align="center"><?php echo $nomor=$nomor+1; ?></td>
           <td><?php echo $row->nama_santri; ?></td>
-          <td align="center"><?php echo round($xij1,4); ?></td>
+          <td align="center"><?php echo round($xij1,3); ?></td>
           <td align="center"><?php echo round($xij2,3); ?></td>
           <td align="center"><?php echo round($xij3,3); ?></td>
-          <td align="center"><?php echo round($cost4,3); ?></td>
+          <td align="center"><?php echo round($xij4,3); ?></td>
           <td align="center"><?php echo round($xij5,3); ?></td>
           <td align="center"><?php echo round($xij6,3); ?></td>
           </tr>
@@ -403,11 +396,11 @@
               </tbody>
         <tfooter>
         <tr>
-          <td colspan="2">Normalize Si</td>
-          <td align="center"><?php echo round(($data_normal->c1)+(1/($min1->c1)),4); ?></td>
+          <td colspan="2">A0</td>
+          <td align="center"><?php echo round($xijsi1,4); ?></td>
           <td align="center"><?php echo round($xijsi2,4); ?></td>
           <td align="center"><?php echo round($xijsi3,4); ?></td>
-          <td align="center"><?php echo round($cost4,4); ?></td>
+          <td align="center"><?php echo round($xijsi4,4); ?></td>
           <td align="center"><?php echo round($xijsi5,4); ?></td>
           <td align="center"><?php echo round($xij6,4); ?></td>
 
@@ -424,7 +417,7 @@
     <div class="span11">
       <div class="box">
           <div class="box-header"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><i>Step-3- Calculate the negative distance from average</small></h5>
+            <h5><i>NORMALISASI TERBOBOT</small></h5>
           </div>
           <div class="box-body">
             <table class="table table-bordered data-table">
@@ -457,10 +450,10 @@
 
       
 
-          $nb1 = (($cost1)/(($tot1->c1)+($min1->c1)))*($bobot_c1);
+          $nb1 = (1/($row->c1))/($tc1)*($bobot_c1);
           $nb2 = (($row->c2)/(($tot2->c2)+($max2->c2)))*($bobot_c2);
           $nb3 = (($row->c3)/(($tot3->c3)+($max3->c3)))*($bobot_c3);
-          $nb4 = (($cost4)/(($tot4->c4)+($min4->c4)))*($bobot_c4);
+          $nb4 =  (1/($row->c4))/($tc4)*($bobot_c4);
           $nb5 = (($row->c5)/(($tot5->c5)+($max5->c5)))*($bobot_c5);
           $nb6 = (($row->c6)/(($tot6->c6)+($max6->c6)))*($bobot_c6);
 
@@ -493,7 +486,7 @@
         <tfooter>
         <tr>
           <td colspan="2">Calculate Si</td>
-          <td align="center"><?php echo round($xijsi1,4); ?></td>
+          <td align="center"><?php echo round($nbsi1,4); ?></td>
           <td align="center"><?php echo round($nbsi2,4); ?></td>
           <td align="center"><?php echo round($nbsi3,4); ?></td>
           <td align="center"><?php echo round($nbsi4,4); ?></td>
@@ -539,16 +532,22 @@
             $nomor = 0;
         foreach($kriteria as $row){
 
-          $nb1 = (($cost1)/($tot1->c1))*($bobot_c1);
-          $nb2 = (($row->c2)/($tot2->c2))*($bobot_c2);
-          $nb3 = (($row->c3)/($tot3->c3))*($bobot_c3);
-          $nb4 = (($cost4)/($tot4->c4))*($bobot_c4);
-          $nb5 = (($row->c5)/($tot5->c5))*($bobot_c5);
-          $nb6 = (($row->c6)/($tot6->c6))*($bobot_c6);
+          $nb1 = (1/($row->c1))/($tc1)*($bobot_c1);
+          $nb2 = (($row->c2)/(($tot2->c2)+($max2->c2)))*($bobot_c2);
+          $nb3 = (($row->c3)/(($tot3->c3)+($max3->c3)))*($bobot_c3);
+          $nb4 =  (1/($row->c4))/($tc4)*($bobot_c4);
+          $nb5 = (($row->c5)/(($tot5->c5)+($max5->c5)))*($bobot_c5);
+          $nb6 = (($row->c6)/(($tot6->c6)+($max6->c6)))*($bobot_c6);
 
+          $nbsi1 = ($xijsi1)*($bobot_c1);
+          $nbsi2 = ($xijsi2)*($bobot_c2);
+          $nbsi3 = ($xijsi3)*($bobot_c3);
+          $nbsi4 = ($xijsi4)*($bobot_c4);
+          $nbsi5 = ($xijsi5)*($bobot_c5);
+          $nbsi6 = ($xijsi6)*($bobot_c6);
 
-          $si1 = ($nb1)+($nb2)+($nb3)+($nb4)+($nb5)+($nb6);
-          $sit = ($tot1->c1)+($tot2->c2)+($tot3->c3)+($tot4->c4)+($tot5->c5)+($tot6->c6);
+          $si1 = $nb1+$nb2+$nb3+$nb4+$nb5+$nb6;
+          $sit = $nbsi1+$nbsi2+$nbsi3+$nbsi4+$nbsi5+$nbsi6;
       
         
             ?>
@@ -568,7 +567,7 @@
        <tfooter>
               <tr>
               <td colspan="2">Si Total</td>
-              <td align="center"><?php echo $sit; ?></td>
+              <td align="center"><?php echo round($sit,4); ?></td>
               </tr>
           </tfooter>
             </table>
@@ -604,32 +603,35 @@
           <tbody>
               <?php 
                 if (isset($_POST['simpan']) && isset($_POST['tahun'])) { 
-        $kriteria = $this->db->query("SELECT * from tabel_kriteria LEFT JOIN tabel_santri on tabel_kriteria.nisn=tabel_santri.nisn where tahun='$tahun'")->result();
-            $nomor = 0;
-        foreach($kriteria as $row){
+        $kriteria = $this->db->query("SELECT * from tabel_kriteria JOIN tabel_santri on tabel_kriteria.nisn=tabel_santri.nisn where tahun='$tahun'")->result();
+		foreach($kriteria as $row){ 
+		   $nomor = 0;
         
-          $nb1 = (($cost1)/($tot1->c1))*($bobot_c1);
-          $nb2 = (($row->c2)/($tot2->c2))*($bobot_c2);
-          $nb3 = (($row->c3)/($tot3->c3))*($bobot_c3);
-          $nb4 = (($cost4)/($tot4->c4))*($bobot_c4);
-          $nb5 = (($row->c5)/($tot5->c5))*($bobot_c5);
-          $nb6 = (($row->c6)/($tot6->c6))*($bobot_c6);
-      
-          $ki1 = (($nb1)+($nb2)+($nb3)+($nb4)+($nb5)+($nb6))/($sit);
-        
-          
-            ?>
+         
+          $nb1 = (1/($row->c1))/($tc1)*($bobot_c1);
+          $nb2 = (($row->c2)/(($tot2->c2)+($max2->c2)))*($bobot_c2);
+          $nb3 = (($row->c3)/(($tot3->c3)+($max3->c3)))*($bobot_c3);
+          $nb4 =  (1/($row->c4))/($tc4)*($bobot_c4);
+          $nb5 = (($row->c5)/(($tot5->c5)+($max5->c5)))*($bobot_c5);
+          $nb6 = (($row->c6)/(($tot6->c6)+($max6->c6)))*($bobot_c6);
+                
+          $ki = (($nb1)+($nb2)+($nb3)+($nb4)+($nb5)+($nb6))/($sit);
+        	// $rangking = $this->db->query("INSERT INTO tabel_normalisasi (nisn, rangking_aras) values ('$row->nisn','$ki')");
+			$this->db->order_by('rangking_aras', 'DESC');
+			$this->db->group_by('tabel_normalisasi.rangking_aras');
+			$kandidat = $this->db->get('tabel_normalisasi')->result();
+				  
+		
+		  ?>           
       
           <tr>
           <td align="center"><?php echo $nomor=$nomor+1; ?></td>
           <td><?php echo $row->nama_santri; ?></td>
-          <td align="center"><?php echo $ki1; ?></td>
+          <td align="center"><?php echo $ki; ?></td>
           </tr>
-        
-        
-          
       <?php
-               }
+	  
+           }
             }}
       ?></tbody>
       
@@ -647,54 +649,42 @@
           </div>
           <div class="box-body">
             <table class="table table-bordered data-table">
-      <?php 
-                 if (isset($_POST['simpan']) && isset($_POST['tahun'])) { 
-        $query = $this->db->query("SELECT * from tabel_kriteria inner join tabel_santri on tabel_kriteria.nisn=tabel_santri.nisn where tabel_kriteria.tahun='$tahun'")->result();
-            
-    
-            ?>
+     
       
               <div class="box-body">
             <table class="table table-bordered data-table">
           <thead>
           <tr>
-            <th class="text-center">No</th>
-            <th class="text-center">Nama Santri</th>
+          
             <th class="text-center">Ki</th>
           <th class="text-center">Rank</th>
           </tr>
           </thead>
           <tbody>
               <?php 
-                if (isset($_POST['simpan']) && isset($_POST['tahun'])) { 
-        $kriteria = $this->db->query("SELECT * from tabel_kriteria LEFT JOIN tabel_santri on tabel_kriteria.nisn=tabel_santri.nisn where tahun='$tahun'")->result();
-            $nomor = 0;
-        foreach($kriteria as $row){
-        
-          $nb1 = (($cost1)/($tot1->c1))*($bobot_c1);
-          $nb2 = (($row->c2)/($tot2->c2))*($bobot_c2);
-          $nb3 = (($row->c3)/($tot3->c3))*($bobot_c3);
-          $nb4 = (($cost4)/($tot4->c4))*($bobot_c4);
-          $nb5 = (($row->c5)/($tot5->c5))*($bobot_c5);
-          $nb6 = (($row->c6)/($tot6->c6))*($bobot_c6);
-      
-      $ki1 = (($nb1)+($nb2)+($nb3)+($nb4)+($nb5)+($nb6))/($sit);
-        
-    
-            ?>
-  
-          <tr>
-          <td align="center"><?php echo $nomor=$nomor+1; ?></td>
-          <td><?php echo $row->nama_santri; ?></td>
-          <td align="center"><?php echo $ki1; ?></td>
-          </tr>
-        
-      
-          
-      <?php
-               }
-            }}
-      ?></tbody>
+                if (isset($_POST['simpan']) && isset($_POST['tahun'])) {
+				$kriteria = $this->db->query("SELECT * from tabel_kriteria LEFT JOIN tabel_santri on tabel_kriteria.nisn=tabel_santri.nisn where tahun='$tahun'")->result();
+
+				$this->db->join('tabel_santri', 'tabel_santri.nisn = tabel_normalisasi.nisn');
+				$this->db->order_by('rangking_aras', 'DESC');
+        $this->db->group_by('tabel_normalisasi.nisn');
+				$kandidat = $this->db->get('tabel_normalisasi')->result();
+
+		        $a = 0;
+
+				foreach ($kandidat as $v) {
+			
+                  ?>
+                   <tr>
+                    <td><?php echo $v->nama_santri; ?></td>
+                    <td><?php echo $v->rangking_aras; ?></td>
+                    <td><?php echo $a+1; ?></td>
+                  </tr>
+                  <?php
+                  $a++;
+                
+              }}
+            ?></tbody>
       
             </table>
           </div>
